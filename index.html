@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>石梅总演讲稿生成器 - GitHub Pages版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .title {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .input-section, .output-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .api-key-input {
+            position: relative;
+        }
+        
+        .api-key-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .generate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .generate-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .output-content {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 300px;
+            border: 2px solid #e1e5e9;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #667eea;
+            font-style: italic;
+        }
+        
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .success {
+            color: #155724;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        
+        .info-box p {
+            color: #424242;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #218838 0%, #1ea080 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+        }
+        
+        .word-count {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 5px;
+            padding: 8px 12px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #2e7d32;
+            text-align: center;
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f0f2f5;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .stat-value {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🎤 石梅总演讲稿生成器</h1>
+            <p class="subtitle">GitHub Pages版 - 基于石梅总演讲风格的AI生成器</p>
+        </div>
+        
+        <div class="info-box">
+            <h4>📝 石梅总演讲风格深度学习</h4>
+            <p>• 基于三篇完整演讲稿深度学习：合作伙伴大会、海事大学发布会、同济大学学术研讨会</p>
+            <p>• 涵盖学术场合、正式发布、合作交流等多种场景的演讲风格特征</p>
+            <p>• 优化版本：生成结构清晰、分段合理的演讲稿，保持正常标点符号和良好可读性</p>
+            <p>• 请输入GLM API密钥开始生成专属的石梅总风格演讲稿（c7ab5b6c6d8347edb3ecc6a5ded79a92.Cxlz5HcI73trvpKG）</p>
+            <p>• 快捷键：Ctrl+Enter 生成演讲稿 | Ctrl+C 一键复制</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="input-section">
+                <h2 class="section-title">📋 演讲配置</h2>
+                
+                <div class="form-group">
+                    <label for="apiKey">GLM API密钥 *</label>
+                    <div class="api-key-input">
+                        <input type="password" id="apiKey" placeholder="请输入你的GLM API密钥">
+                        <button type="button" class="api-key-toggle" onclick="toggleApiKey()">显示</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="topic">演讲主题 *</label>
+                    <input type="text" id="topic" placeholder="例如：人工智能的未来发展">
+                </div>
+                
+                <div class="form-group">
+                    <label for="type">演讲类型</label>
+                    <select id="type">
+                        <option value="keynote">主题演讲</option>
+                        <option value="presentation">工作汇报</option>
+                        <option value="conference">会议发言</option>
+                        <option value="training">培训讲座</option>
+                        <option value="ceremony">庆典致辞</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">演讲时长</label>
+                    <select id="duration">
+                        <option value="5">5分钟</option>
+                        <option value="10" selected>10分钟</option>
+                        <option value="15">15分钟</option>
+                        <option value="20">20分钟</option>
+                        <option value="30">30分钟</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="audience">目标听众</label>
+                    <select id="audience">
+                        <option value="management">管理层</option>
+                        <option value="tech">技术团队</option>
+                        <option value="client">客户</option>
+                        <option value="employee">员工</option>
+                        <option value="public">公众</option>
+                        <option value="student">学生</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="style">演讲风格</label>
+                    <select id="style">
+                        <option value="professional">专业正式</option>
+                        <option value="friendly">亲和友好</option>
+                        <option value="inspiring">激励鼓舞</option>
+                        <option value="humorous">幽默风趣</option>
+                        <option value="academic">学术严谨</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="keyPoints">关键要点（可选）</label>
+                    <textarea id="keyPoints" placeholder="请列出你希望在演讲中强调的关键要点，每行一个要点"></textarea>
+                </div>
+                
+                <button class="generate-btn" onclick="generateSpeech()">
+                    🎯 生成演讲稿
+                </button>
+            </div>
+            
+            <div class="output-section">
+                <h2 class="section-title">📄 生成结果</h2>
+                <div class="stats-bar" id="statsBar" style="display: none;">
+                    <div class="stat-item">
+                        <span class="stat-label">字数统计</span>
+                        <span class="stat-value" id="wordCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">预计时长</span>
+                        <span class="stat-value" id="estimatedTime">0分钟</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">段落数</span>
+                        <span class="stat-value" id="paragraphCount">0</span>
+                    </div>
+                </div>
+                <div id="output" class="output-content">
+                    点击"生成演讲稿"开始创建你的专属演讲内容...
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard()" style="display: none;" id="copyBtn">
+                    📋 一键复制演讲稿
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isApiKeyVisible = false;
+        
+        function toggleApiKey() {
+            const apiKeyInput = document.getElementById('apiKey');
+            const toggleBtn = document.querySelector('.api-key-toggle');
+            
+            if (isApiKeyVisible) {
+                apiKeyInput.type = 'password';
+                toggleBtn.textContent = '显示';
+                isApiKeyVisible = false;
+            } else {
+                apiKeyInput.type = 'text';
+                toggleBtn.textContent = '隐藏';
+                isApiKeyVisible = true;
+            }
+        }
+        
+        function getAudienceText(audienceType) {
+            const audienceMap = {
+                'tech': '技术团队',
+                'management': '管理层',
+                'client': '客户',
+                'employee': '员工',
+                'public': '公众',
+                'student': '学生'
+            };
+            return audienceMap[audienceType] || '通用听众';
+        }
+        
+        function cleanSpeechContent(content) {
+            if (!content) return content;
+            
+            // 温和清理，保留正常的标点符号和分段
+            return content
+                // 去除连续重复的标点符号（保留单个正常标点）
+                .replace(/，{2,}/g, '，')
+                .replace(/。{2,}/g, '。')
+                .replace(/！{2,}/g, '！')
+                .replace(/？{2,}/g, '？')
+                .replace(/：{2,}/g, '：')
+                .replace(/；{2,}/g, '；')
+                .replace(/、{2,}/g, '、')
+                // 去除连续的空格（保留正常空格）
+                .replace(/[ \t]{2,}/g, ' ')
+                // 去除过多的空行（保留正常分段）
+                .replace(/\n{4,}/g, '\n\n\n')
+                // 清理不合理的标点符号组合
+                .replace(/，。/g, '。')
+                .replace(/。，/g, '。')
+                .replace(/、。/g, '。')
+                // 去除markdown格式符号（保持内容纯净）
+                .replace(/\*\*([^*]+)\*\*/g, '$1')
+                .replace(/\*([^*]+)\*/g, '$1')
+                .replace(/^#{1,6}\s*/gm, '')
+                // 去除连续的引号
+                .replace(/"{2,}/g, '"')
+                .replace(/'{2,}/g, "'")
+                // 清理行首行尾多余空格
+                .replace(/^[ \t]+|[ \t]+$/gm, '')
+                .trim();
+        }
+        
+        function updateWordCount(text) {
+            if (!text || text.includes('生成中') || text.includes('失败')) {
+                document.getElementById('statsBar').style.display = 'none';
+                return;
+            }
+            
+            // 计算字数（中文字符 + 英文单词）
+            const chineseChars = (text.match(/[\u4e00-\u9fa5]/g) || []).length;
+            const englishWords = (text.match(/[a-zA-Z]+/g) || []).length;
+            const totalWords = chineseChars + englishWords;
+            
+            // 计算段落数
+            const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
+            
+            // 估算演讲时长（按每分钟200字计算）
+            const estimatedMinutes = Math.ceil(totalWords / 200);
+            
+            // 更新显示
+            document.getElementById('wordCount').textContent = totalWords;
+            document.getElementById('estimatedTime').textContent = estimatedMinutes + '分钟';
+            document.getElementById('paragraphCount').textContent = paragraphs;
+            document.getElementById('statsBar').style.display = 'flex';
+        }
+        
+        async function generateSpeech() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            const topic = document.getElementById('topic').value.trim();
+            const type = document.getElementById('type').value;
+            const duration = document.getElementById('duration').value;
+            const audience = document.getElementById('audience').value;
+            const style = document.getElementById('style').value;
+            const keyPoints = document.getElementById('keyPoints').value.trim();
+            
+            const output = document.getElementById('output');
+            const generateBtn = document.querySelector('.generate-btn');
+            const copyBtn = document.getElementById('copyBtn');
+            
+            // 验证必填字段
+            if (!apiKey) {
+                output.innerHTML = '<div class="error">❌ 请输入GLM API密钥</div>';
+                return;
+            }
+            
+            if (!topic) {
+                output.innerHTML = '<div class="error">❌ 请输入演讲主题</div>';
+                return;
+            }
+            
+            // 开始生成
+            generateBtn.disabled = true;
+            generateBtn.textContent = '🔄 生成中...';
+            output.innerHTML = '<div class="loading">🤖 AI正在为您精心创作演讲稿，请稍候...</div>';
+            copyBtn.style.display = 'none';
+            document.getElementById('statsBar').style.display = 'none';
+            
+            try {
+                // 构建提示词
+                const typeMap = {
+                    'keynote': '主题演讲',
+                    'presentation': '工作汇报',
+                    'conference': '会议发言',
+                    'training': '培训讲座',
+                    'ceremony': '庆典致辞'
+                };
+                
+                const styleMap = {
+                    'professional': '专业正式',
+                    'friendly': '亲和友好',
+                    'inspiring': '激励鼓舞',
+                    'humorous': '幽默风趣',
+                    'academic': '学术严谨'
+                };
+                
+                const audienceText = getAudienceText(audience);
+                
+                let prompt = `请严格模仿石梅（腾讯教育高管）的演讲风格，为我创作一篇${typeMap[type]}的演讲稿。
+
+石梅演讲风格核心特征：
+
+开场风格：
+- 正式致敬各级领导和嘉宾
+- 自我介绍："我是腾讯教育石梅"
+- 表达荣幸和祝贺
+- 强调公司使命："用户为本 科技向善"
+
+内容架构：
+- 教育理念："用数字科技 让教育更富创造力"
+- 价值主张："科技助教 连接兴学 专业为育"
+- 愿景定位：成为教育创新的共建者
+- 合作理念：携手同行 并肩前行 共同书写
+
+语言特点：
+- 专业术语准确：AI原生 智能体 大模型 教育数字化转型
+- 数据驱动表达：具体的学校数 师生数 作品数等
+- 时间节点明确：按月份梳理成果和进展
+- 感谢层次丰富：多层次表达感谢
+
+基本信息：
+- 演讲主题：${topic}
+- 演讲时长：${duration}分钟
+- 目标听众：${audienceText}
+- 演讲风格：${styleMap[style]}
+
+内容要求：
+1. 开场简洁有力 问候致敬 主题引入
+2. 主体分2-3个维度展开 包含趋势分析 产品落地 创新应用
+3. 结尾愿景展望 使命表达 合作邀请 感谢致辞
+4. 语言${styleMap[style]} 体现腾讯教育技术实力和服务理念
+5. 控制在${duration}分钟时长 适合${audienceText}理解
+6. 重要：生成的演讲稿要简洁清晰 减少不必要的标点符号和修饰词 保持内容的流畅性和可读性`;
+
+                if (keyPoints) {
+                    prompt += `\n\n关键要点：\n${keyPoints}`;
+                }
+
+                prompt += `\n\n石梅演讲风格参考样本：
+
+学术场合开场示例：
+"尊敬的各位领导和嘉宾，大家上午好！非常荣幸受邀参加本次学术研讨会。首先，我代表腾讯教育，对研讨会的顺利召开表示热烈祝贺！"
+
+公司使命表达：
+"腾讯作为一家'用户为本，科技向善'为使命的科技公司，我们致力于通过数字化工具助力各行各业实现数字化转型。在教育领域，我们希望'用数字科技，让教育更富创造力'。"
+
+价值主张阐述：
+"我们始终坚持'科技助教、连接兴学、专业为育'的价值主张，依托腾讯云丰富的基础产品能力以及AI、连接方面的优势，服务于教育的数字化转型和高质量发展。"
+
+愿景定位升华：
+"我们的愿景是成为教育创新的'共建者'，而不仅仅是技术工具的提供者。当前，我们正站在一场由人工智能驱动的教育变革浪潮之巅。"
+
+深度合作理念：
+"在这方面，我们与合作伙伴已经迈出了坚实的步伐。我们正围绕'大模型'这一核心，展开'大设计'层面的深度协同创新。"
+
+具体合作内容：
+"例如，双方正在共同规划和设计面向智能教学场景的下一代教育大模型。腾讯云将提供强大的云计算基础设施和高性能的模型训练框架。"
+
+平台发布节点：
+"今年9月，'腾讯教育智能体平台'正式发布，旨在通过Agent技术助力课堂教学模式创新，打造'学、用、创、赛'一站式新一代学习平台。"
+
+数据支撑示例：
+"腾讯已助力多所高校举办智能体大赛，吸引来自8所高校的64支战队、109名选手参与，产出100多个涵盖学业规划、代码开发、智能助教等方向的教育智能体应用成果。"
+
+合作伙伴大会开场：
+"各位来宾、各位伙伴，大家下午好！我是腾讯教育石梅。非常高兴能够在这里与各位同道者相聚，共同探讨教育数字化的未来发展。"
+
+数据驱动表达：
+"自8月19日正式发布以来，青少年AIGC创作工坊已经落地300多所学校，服务5000多名师生，平台上积累了30000多件作品。"
+
+时间节点梳理：
+"8月，我们发布了青少年AIGC创作工坊；9月，腾讯教育智能体平台正式上线；10月，我们与上海海事大学共同发布了海商法大模型。"
+
+合作理念表达：
+"我们希望与各位教育同仁携手同行，在AI赋能教育的道路上并肩前行，共同探索教育创新的无限可能。"
+
+感谢致辞示例：
+"教育创新与科学技术发展息息相关，腾讯教育愿与各位同仁一起，以开放的心态、务实的行动，探索人工智能与教育融合的更多可能，共同书写教育创新发展的新篇章！"
+
+祝福结尾：
+"最后，预祝本次活动圆满成功，祝各位领导、各位同仁学有所获、万事如意！谢谢大家！"
+
+注意：请生成结构清晰、分段合理的演讲稿，使用正常的标点符号保证可读性，避免过度修饰但保持演讲稿的专业性和流畅性。`;
+                
+                // 清理prompt中可能的问题字符
+                prompt = prompt.replace(/[\u0000-\u001F\u007F-\u009F]/g, '');
+                
+                // 调用GLM API
+                const response = await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'Authorization': 'Bearer ' + apiKey
+                    },
+                    body: JSON.stringify({
+                        model: 'glm-4-plus',
+                        messages: [
+                            {
+                                role: 'system',
+                                content: '你是一个专业的演讲稿写作助手。请生成结构清晰、分段合理的演讲稿，使用正常的标点符号（逗号、句号、冒号等）来保证可读性。避免过度使用修饰词和冗余表达，但要保持演讲稿的正常格式和流畅性。'
+                            },
+                            {
+                                role: 'user',
+                                content: prompt
+                            }
+                        ],
+                        temperature: 0.7,
+                        max_tokens: 4000
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(`API请求失败 (${response.status}): ${errorData.error?.message || '未知错误'}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.choices && data.choices[0] && data.choices[0].message) {
+                    let speechContent = data.choices[0].message.content;
+                    
+                    // 清理多余的标点符号和格式化字符
+                    speechContent = cleanSpeechContent(speechContent);
+                    
+                    output.innerHTML = `<div class="success">✅ 演讲稿生成成功！</div>\n\n<div id="speechText">${speechContent}</div>`;
+                    copyBtn.style.display = 'inline-block';
+                    
+                    // 更新字数统计
+                    updateWordCount(speechContent);
+                } else {
+                    throw new Error('API返回数据格式异常');
+                }
+                
+            } catch (error) {
+                console.error('生成演讲稿失败:', error);
+                output.innerHTML = `<div class="error">❌ 生成失败：${error.message}</div>`;
+                document.getElementById('statsBar').style.display = 'none';
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.textContent = '🎯 生成演讲稿';
+            }
+        }
+        
+        function copyToClipboard() {
+            const output = document.getElementById('output');
+            
+            if (!output) {
+                alert('未找到演讲稿内容');
+                return;
+            }
+            
+            // 获取演讲稿文本内容
+            let text = '';
+            const speechTextElement = document.getElementById('speechText');
+            
+            if (speechTextElement) {
+                // 如果有专门的speechText元素，优先使用
+                text = speechTextElement.textContent || speechTextElement.innerText;
+            } else {
+                // 否则从整个output中提取，去除状态信息
+                text = output.textContent || output.innerText;
+                // 清理状态信息
+                text = text.replace(/✅ 演讲稿生成成功！/g, '')
+                          .replace(/❌ 生成失败：.*$/gm, '')
+                          .replace(/🤖 AI正在为您精心创作演讲稿，请稍候.../g, '')
+                          .replace(/点击"生成演讲稿"开始创建你的专属演讲内容.../g, '')
+                          .trim();
+            }
+            
+            // 验证文本内容
+            if (!text || text.length < 10) {
+                alert('请先生成演讲稿内容');
+                return;
+            }
+            
+            // 检查是否包含无效内容
+            if (text.includes('生成中') || text.includes('失败') || text.includes('点击')) {
+                alert('演讲稿还未生成完成，请稍后再试');
+                return;
+            }
+            
+            // 复制到剪贴板
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                // 现代浏览器使用Clipboard API
+                navigator.clipboard.writeText(text).then(() => {
+                    showCopySuccess();
+                }).catch(err => {
+                    console.error('Clipboard API复制失败:', err);
+                    fallbackCopy(text);
+                });
+            } else {
+                // 旧浏览器使用fallback方法
+                fallbackCopy(text);
+            }
+        }
+        
+        function showCopySuccess() {
+            const copyBtn = document.getElementById('copyBtn');
+            if (copyBtn) {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✅ 已复制';
+                copyBtn.style.backgroundColor = '#28a745';
+                
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                    copyBtn.style.backgroundColor = '#28a745';
+                }, 2000);
+            }
+            
+            // 显示临时提示
+            showToast('演讲稿已复制到剪贴板！');
+        }
+        
+        function fallbackCopy(text) {
+            // 创建临时文本区域
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            
+            try {
+                textArea.focus();
+                textArea.select();
+                const successful = document.execCommand('copy');
+                
+                if (successful) {
+                    showCopySuccess();
+                } else {
+                    throw new Error('execCommand复制失败');
+                }
+            } catch (err) {
+                console.error('Fallback复制失败:', err);
+                
+                // 最后的备选方案：选中文本让用户手动复制
+                const output = document.getElementById('output');
+                if (output) {
+                    const range = document.createRange();
+                    range.selectNodeContents(output);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+                
+                alert('自动复制失败，文本已选中，请按 Ctrl+C 手动复制');
+            } finally {
+                document.body.removeChild(textArea);
+            }
+        }
+        
+        function showToast(message) {
+            // 创建toast提示
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-size: 14px;
+                font-weight: 500;
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: all 0.3s ease;
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // 显示动画
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // 隐藏动画
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // 键盘快捷键
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.key === 'Enter') {
+                // Ctrl+Enter: 生成演讲稿
+                generateSpeech();
+            } else if (event.ctrlKey && event.key === 'c' && event.target.tagName !== 'INPUT' && event.target.tagName !== 'TEXTAREA') {
+                // Ctrl+C: 复制演讲稿（当不在输入框中时）
+                const copyBtn = document.getElementById('copyBtn');
+                if (copyBtn && copyBtn.style.display !== 'none') {
+                    event.preventDefault();
+                    copyToClipboard();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
