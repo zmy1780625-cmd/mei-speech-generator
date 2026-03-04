@@ -10,58 +10,439 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
             min-height: 100vh;
-            color: #333;
+            color: #1e293b;
         }
-        
+
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
-        
+
+        /* 头部区域 - 模仿参考图风格 */
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, #e0f7fa 0%, #80deea 50%, #4dd0e1 100%);
+            border-radius: 24px;
+            padding: 60px 50px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 60px rgba(77, 208, 225, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        
+
+        /* 波浪装饰 */
+        .header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.4' d='M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat bottom;
+            background-size: cover;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
         .title {
-            font-size: 2.5em;
-            color: #333;
-            margin-bottom: 10px;
+            font-size: 2.6em;
+            color: #1a237e;
+            margin-bottom: 16px;
             font-weight: 700;
+            line-height: 1.3;
         }
-        
+
+        .title-highlight {
+            color: #ff9800;
+            position: relative;
+            display: inline-block;
+        }
+
+        .title-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(120deg, #ffd54f 0%, #ff9800 100%);
+            opacity: 0.3;
+            border-radius: 4px;
+        }
+
         .subtitle {
-            font-size: 1.2em;
-            color: #666;
-            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #546e7a;
+            margin-bottom: 0;
+            font-weight: 400;
+        }
+
+        /* 右侧装饰区域 */
+        .header-decoration {
+            position: relative;
+            z-index: 2;
+            width: 300px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* AI图标 */
+        .ai-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: #667eea;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 20px;
+            right: 80px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* 灯泡图标 */
+        .bulb-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.2);
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            animation: float 3s ease-in-out infinite 0.5s;
+        }
+
+        /* 小装饰图标 */
+        .decor-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            position: absolute;
+            bottom: 30px;
+            right: 150px;
+            animation: float 3s ease-in-out infinite 1s;
+        }
+
+        /* 浮动动画 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 30px;
+            }
+            
+            .header-decoration {
+                display: none;
+            }
+            
+            .title {
+                font-size: 1.8em;
+            }
         }
         
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+            grid-template-columns: 380px 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
         }
-        
-        .input-section, .output-section {
-            background: rgba(255, 255, 255, 0.95);
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* 输入配置区域 - 蓝色系 */
+        .input-section {
+            background: linear-gradient(145deg, #ffffff 0%, #f0f5ff 100%);
             border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
+            padding: 28px;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(99, 102, 241, 0.15);
         }
-        
+
+        .input-section .section-title {
+            color: #4338ca;
+        }
+
+        /* 输出结果区域 - 绿色系 */
+        .output-section {
+            background: linear-gradient(145deg, #ffffff 0%, #f0fdf4 100%);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 8px 32px rgba(34, 197, 94, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(34, 197, 94, 0.15);
+        }
+
+        .output-section .section-title {
+            color: #15803d;
+        }
+
+        /* 历史记录区域 - 橙色系 */
+        .history-section {
+            background: linear-gradient(145deg, #ffffff 0%, #fff7ed 100%);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(249, 115, 22, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(249, 115, 22, 0.15);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .history-section .section-title {
+            color: #c2410c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3em;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .clear-history-btn {
+            font-size: 12px;
+            padding: 4px 10px;
+            background: rgba(249, 115, 22, 0.1);
+            color: #c2410c;
+            border: 1px solid rgba(249, 115, 22, 0.2);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-history-btn:hover {
+            background: rgba(249, 115, 22, 0.2);
+        }
+
+        /* RAG开关样式 */
+        .rag-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .rag-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .rag-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .rag-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .3s;
+            border-radius: 24px;
+        }
+
+        .rag-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .rag-slider {
+            background-color: #6366f1;
+        }
+
+        input:checked + .rag-slider:before {
+            transform: translateX(20px);
+        }
+
+        .rag-label {
+            font-size: 14px;
+            color: #4338ca;
+            font-weight: 500;
+        }
+
+        .rag-tooltip {
+            color: #6366f1;
+            cursor: help;
+            font-size: 14px;
+        }
+
+        /* RAG预览区域样式 */
+        .rag-preview {
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .rag-preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: #4338ca;
+            font-weight: 600;
+        }
+
+        .rag-refresh-btn {
+            background: rgba(99, 102, 241, 0.1);
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            color: #4338ca;
+            transition: all 0.3s ease;
+        }
+
+        .rag-refresh-btn:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .rag-preview-content {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.6;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .rag-data-item {
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(99, 102, 241, 0.1);
+        }
+
+        .rag-data-item:last-child {
+            border-bottom: none;
+        }
+
+        .rag-data-type {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            margin-right: 6px;
+            font-weight: 600;
+        }
+
+        .rag-data-type.policy {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .rag-data-type.case {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .rag-data-type.data {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        /* 历史记录项样式 */
+        .history-item {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(249, 115, 22, 0.15);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(249, 115, 22, 0.3);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .history-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .history-topic {
+            font-weight: 600;
+            color: #c2410c;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .history-preview {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .history-time {
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
         .section-title {
             font-size: 1.5em;
             color: #333;
@@ -91,8 +472,8 @@
         
         input:focus, textarea:focus, select:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
         }
         
         textarea {
@@ -118,21 +499,22 @@
         
         .generate-btn {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
-        
+
         .generate-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
         }
         
         .generate-btn:disabled {
@@ -143,14 +525,16 @@
         }
         
         .output-content {
-            background: #f8f9fa;
-            border-radius: 10px;
+            background: rgba(248, 249, 250, 0.8);
+            border-radius: 12px;
             padding: 20px;
             min-height: 300px;
-            border: 2px solid #e1e5e9;
+            border: 1px solid rgba(225, 229, 233, 0.5);
             white-space: pre-wrap;
             font-family: 'Courier New', monospace;
-            line-height: 1.6;
+            line-height: 1.8;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         
         .loading {
@@ -178,11 +562,14 @@
         }
         
         .info-box {
-            background: #e3f2fd;
-            border: 1px solid #90caf9;
-            border-radius: 10px;
-            padding: 15px;
+            background: rgba(227, 242, 253, 0.7);
+            border: 1px solid rgba(144, 202, 249, 0.3);
+            border-radius: 16px;
+            padding: 20px;
             margin-bottom: 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
         
         .info-box h4 {
@@ -239,11 +626,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #f0f2f5;
+            background: rgba(240, 242, 245, 0.7);
             border-radius: 8px;
             padding: 10px 15px;
             margin-bottom: 15px;
             font-size: 14px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(225, 229, 233, 0.5);
         }
         
         .stat-item {
@@ -263,13 +653,31 @@
             font-weight: 600;
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .main-content {
                 grid-template-columns: 1fr;
             }
-            
+
+            .sidebar {
+                flex-direction: column;
+            }
+
             .title {
                 font-size: 2em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 25px;
+            }
+
+            .title {
+                font-size: 1.6em;
+            }
+
+            .subtitle {
+                font-size: 1em;
             }
         }
     </style>
@@ -277,91 +685,129 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="title">🎤 石梅总演讲稿生成器</h1>
-            <p class="subtitle">GitHub Pages版 - 基于石梅总演讲风格的AI生成器</p>
+            <div class="header-content">
+                <h1 class="title">梅总演讲稿生成器</h1>
+                <p class="subtitle">输入演讲主题，AI帮您生成专属石梅总风格的演讲稿</p>
+            </div>
+            <div class="header-decoration">
+                <div class="ai-icon">AI</div>
+                <div class="bulb-icon">💡</div>
+                <div class="decor-icon">🎤</div>
+            </div>
         </div>
         
         <div class="info-box">
             <h4>📝 石梅总演讲风格深度学习</h4>
-            <p>• 基于三篇完整演讲稿深度学习：合作伙伴大会、海事大学发布会、同济大学学术研讨会</p>
-            <p>• 涵盖学术场合、正式发布、合作交流等多种场景的演讲风格特征</p>
+            <p>• 基于四篇完整演讲稿深度学习：合作伙伴大会、海事大学发布会、同济大学学术研讨会、2025数字生态大会教育专场</p>
+            <p>• 涵盖学术场合、正式发布、合作交流、数字生态大会等多种场景的演讲风格特征</p>
             <p>• 优化版本：生成结构清晰、分段合理的演讲稿，保持正常标点符号和良好可读性</p>
             <p>• 请输入GLM API密钥开始生成专属的石梅总风格演讲稿（c7ab5b6c6d8347edb3ecc6a5ded79a92.Cxlz5HcI73trvpKG）</p>
             <p>• 快捷键：Ctrl+Enter 生成演讲稿 | Ctrl+C 一键复制</p>
         </div>
         
         <div class="main-content">
-            <div class="input-section">
-                <h2 class="section-title">📋 演讲配置</h2>
-                
-                <div class="form-group">
-                    <label for="apiKey">GLM API密钥 *</label>
-                    <div class="api-key-input">
-                        <input type="password" id="apiKey" placeholder="请输入你的GLM API密钥">
-                        <button type="button" class="api-key-toggle" onclick="toggleApiKey()">显示</button>
+            <div class="sidebar">
+                <div class="input-section">
+                    <h2 class="section-title">📋 演讲配置</h2>
+
+                    <div class="form-group">
+                        <label for="apiKey">GLM API密钥 *</label>
+                        <div class="api-key-input">
+                            <input type="password" id="apiKey" placeholder="请输入你的GLM API密钥">
+                            <button type="button" class="api-key-toggle" onclick="toggleApiKey()">显示</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="topic">演讲主题 *</label>
+                        <input type="text" id="topic" placeholder="例如：人工智能的未来发展">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type">演讲类型</label>
+                        <select id="type">
+                            <option value="keynote">主题演讲</option>
+                            <option value="presentation">工作汇报</option>
+                            <option value="conference">会议发言</option>
+                            <option value="training">培训讲座</option>
+                            <option value="ceremony">庆典致辞</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="duration">演讲时长</label>
+                        <select id="duration">
+                            <option value="5">5分钟</option>
+                            <option value="10" selected>10分钟</option>
+                            <option value="15">15分钟</option>
+                            <option value="20">20分钟</option>
+                            <option value="30">30分钟</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="audience">目标听众</label>
+                        <select id="audience">
+                            <option value="management">管理层</option>
+                            <option value="tech">技术团队</option>
+                            <option value="client">客户</option>
+                            <option value="employee">员工</option>
+                            <option value="public">公众</option>
+                            <option value="student">学生</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="style">演讲风格</label>
+                        <select id="style">
+                            <option value="professional">专业正式</option>
+                            <option value="friendly">亲和友好</option>
+                            <option value="inspiring">激励鼓舞</option>
+                            <option value="humorous">幽默风趣</option>
+                            <option value="academic">学术严谨</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="keyPoints">关键要点（可选）</label>
+                        <textarea id="keyPoints" placeholder="请列出你希望在演讲中强调的关键要点，每行一个要点"></textarea>
+                    </div>
+
+                    <!-- RAG功能开关 -->
+                    <div class="rag-toggle">
+                        <label class="rag-switch">
+                            <input type="checkbox" id="ragEnabled" checked onchange="toggleRAG()">
+                            <span class="rag-slider"></span>
+                        </label>
+                        <span class="rag-label">启用智能数据增强 (RAG)</span>
+                        <span class="rag-tooltip" title="自动检索最新教育政策、数据和案例，提升演讲稿真实性">ⓘ</span>
+                    </div>
+
+                    <!-- RAG数据预览区域 -->
+                    <div id="ragPreview" class="rag-preview" style="display: none;">
+                        <div class="rag-preview-header">
+                            <span>📚 已检索到相关数据</span>
+                            <button onclick="refreshRAGData()" class="rag-refresh-btn">🔄 刷新</button>
+                        </div>
+                        <div id="ragPreviewContent" class="rag-preview-content"></div>
+                    </div>
+
+                    <button class="generate-btn" onclick="generateSpeech()">
+                        🎯 生成演讲稿
+                    </button>
+                </div>
+
+                <div class="history-section">
+                    <h2 class="section-title">
+                        📜 历史记录
+                        <button class="clear-history-btn" onclick="clearHistory()">清空</button>
+                    </h2>
+                    <div id="historyList">
+                        <p style="color: #999; text-align: center; padding: 20px;">暂无历史记录</p>
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="topic">演讲主题 *</label>
-                    <input type="text" id="topic" placeholder="例如：人工智能的未来发展">
-                </div>
-                
-                <div class="form-group">
-                    <label for="type">演讲类型</label>
-                    <select id="type">
-                        <option value="keynote">主题演讲</option>
-                        <option value="presentation">工作汇报</option>
-                        <option value="conference">会议发言</option>
-                        <option value="training">培训讲座</option>
-                        <option value="ceremony">庆典致辞</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="duration">演讲时长</label>
-                    <select id="duration">
-                        <option value="5">5分钟</option>
-                        <option value="10" selected>10分钟</option>
-                        <option value="15">15分钟</option>
-                        <option value="20">20分钟</option>
-                        <option value="30">30分钟</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="audience">目标听众</label>
-                    <select id="audience">
-                        <option value="management">管理层</option>
-                        <option value="tech">技术团队</option>
-                        <option value="client">客户</option>
-                        <option value="employee">员工</option>
-                        <option value="public">公众</option>
-                        <option value="student">学生</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="style">演讲风格</label>
-                    <select id="style">
-                        <option value="professional">专业正式</option>
-                        <option value="friendly">亲和友好</option>
-                        <option value="inspiring">激励鼓舞</option>
-                        <option value="humorous">幽默风趣</option>
-                        <option value="academic">学术严谨</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="keyPoints">关键要点（可选）</label>
-                    <textarea id="keyPoints" placeholder="请列出你希望在演讲中强调的关键要点，每行一个要点"></textarea>
-                </div>
-                
-                <button class="generate-btn" onclick="generateSpeech()">
-                    🎯 生成演讲稿
-                </button>
             </div>
-            
+
             <div class="output-section">
                 <h2 class="section-title">📄 生成结果</h2>
                 <div class="stats-bar" id="statsBar" style="display: none;">
@@ -388,8 +834,187 @@
         </div>
     </div>
 
+    <!-- RAG引擎 -->
+    <script src="./js/rag-engine.js"></script>
+    
     <script>
         let isApiKeyVisible = false;
+        const HISTORY_KEY = 'speech_generator_history';
+        const MAX_HISTORY = 20;
+        let useRAG = true; // 默认启用RAG
+
+        // 保存到历史记录
+        function saveToHistory(topic, content) {
+            const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+            const newItem = {
+                id: Date.now(),
+                topic: topic,
+                content: content,
+                time: new Date().toLocaleString('zh-CN')
+            };
+            history.unshift(newItem);
+            if (history.length > MAX_HISTORY) {
+                history.pop();
+            }
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+            renderHistory();
+        }
+
+        // 渲染历史记录
+        function renderHistory() {
+            const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+            const historyList = document.getElementById('historyList');
+
+            if (history.length === 0) {
+                historyList.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">暂无历史记录</p>';
+                return;
+            }
+
+            let html = '';
+            history.forEach(item => {
+                const preview = item.content.substring(0, 60) + (item.content.length > 60 ? '...' : '');
+                html += `
+                    <div class="history-item" onclick="loadFromHistory(${item.id})">
+                        <div class="history-topic">${escapeHtml(item.topic)}</div>
+                        <div class="history-preview">${escapeHtml(preview)}</div>
+                        <div class="history-time">${item.time}</div>
+                    </div>
+                `;
+            });
+            historyList.innerHTML = html;
+        }
+
+        // 从历史记录加载
+        function loadFromHistory(id) {
+            const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+            const item = history.find(h => h.id === id);
+            if (item) {
+                const output = document.getElementById('output');
+                const copyBtn = document.getElementById('copyBtn');
+                output.innerHTML = `<div class="success">📜 历史记录 - ${item.topic}</div>\n\n<div id="speechText">${item.content}</div>`;
+                copyBtn.style.display = 'inline-block';
+                updateWordCount(item.content);
+                document.getElementById('topic').value = item.topic;
+                showToast('已加载历史记录');
+            }
+        }
+
+        // 清空历史记录
+        function clearHistory() {
+            if (confirm('确定要清空所有历史记录吗？')) {
+                localStorage.removeItem(HISTORY_KEY);
+                renderHistory();
+                showToast('历史记录已清空');
+            }
+        }
+
+        // HTML转义
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 页面加载时初始化历史记录和RAG引擎
+        document.addEventListener('DOMContentLoaded', function() {
+            renderHistory();
+            
+            // 初始化RAG引擎
+            if (typeof ragEngine !== 'undefined') {
+                ragEngine.initialize().then(() => {
+                    console.log('RAG引擎就绪');
+                });
+            }
+        });
+
+        // RAG开关控制
+        function toggleRAG() {
+            const checkbox = document.getElementById('ragEnabled');
+            useRAG = checkbox.checked;
+            
+            const previewDiv = document.getElementById('ragPreview');
+            if (!useRAG) {
+                previewDiv.style.display = 'none';
+            }
+        }
+
+        // 显示RAG预览
+        function displayRAGPreview(ragData) {
+            const previewDiv = document.getElementById('ragPreview');
+            const contentDiv = document.getElementById('ragPreviewContent');
+            
+            if (!ragData || !ragData.context) {
+                previewDiv.style.display = 'none';
+                return;
+            }
+            
+            let html = '';
+            
+            // 显示政策
+            if (ragData.policies && ragData.policies.length > 0) {
+                ragData.policies.slice(0, 2).forEach(policy => {
+                    html += `<div class="rag-data-item">
+                        <span class="rag-data-type policy">政策</span>
+                        ${policy.title}
+                    </div>`;
+                });
+            }
+            
+            // 显示案例
+            if (ragData.cases && ragData.cases.length > 0) {
+                ragData.cases.slice(0, 2).forEach(caseItem => {
+                    html += `<div class="rag-data-item">
+                        <span class="rag-data-type case">案例</span>
+                        ${caseItem.title} - ${caseItem.partner}
+                    </div>`;
+                });
+            }
+            
+            // 显示统计数据
+            if (ragData.stats) {
+                const platforms = Object.keys(ragData.stats);
+                if (platforms.length > 0) {
+                    const firstPlatform = platforms[0];
+                    const stats = ragData.stats[firstPlatform];
+                    if (stats.schools || stats.teachersStudents) {
+                        html += `<div class="rag-data-item">
+                            <span class="rag-data-type data">数据</span>
+                            已覆盖${stats.schools || '多'}所学校
+                        </div>`;
+                    }
+                }
+            }
+            
+            if (html) {
+                contentDiv.innerHTML = html;
+                previewDiv.style.display = 'block';
+            }
+        }
+
+        // 刷新RAG数据
+        async function refreshRAGData() {
+            const topic = document.getElementById('topic').value.trim();
+            const type = document.getElementById('type').value;
+            
+            if (!topic || typeof ragEngine === 'undefined') {
+                showToast('请输入演讲主题');
+                return;
+            }
+            
+            const btn = document.querySelector('.rag-refresh-btn');
+            btn.textContent = '🔄 检索中...';
+            
+            try {
+                const ragData = await ragEngine.retrieve(topic, type, 5);
+                displayRAGPreview(ragData);
+                showToast('数据已更新');
+            } catch (e) {
+                console.error('刷新RAG数据失败:', e);
+                showToast('数据更新失败');
+            } finally {
+                btn.textContent = '🔄 刷新';
+            }
+        }
         
         function toggleApiKey() {
             const apiKeyInput = document.getElementById('apiKey');
@@ -526,47 +1151,121 @@
                 
                 const audienceText = getAudienceText(audience);
                 
-                let prompt = `请严格模仿石梅（腾讯教育高管）的演讲风格，为我创作一篇${typeMap[type]}的演讲稿。
+                // 根据演讲类型选择不同的开场方式
+                const openingVariations = {
+                    'keynote': [
+                        '各位来宾、各位伙伴，大家好！我是腾讯教育石梅。非常高兴能够在此与各位相聚',
+                        '尊敬的各位领导和嘉宾，大家好！我是腾讯教育石梅。今天非常荣幸在此分享',
+                        '各位同仁、各位朋友，大家好！我是腾讯教育石梅。非常期待与大家共同探讨'
+                    ],
+                    'presentation': [
+                        '各位领导、各位同事，大家好！我是腾讯教育石梅。现在由我向大家汇报',
+                        '各位同仁，大家好！我是腾讯教育石梅。今天向各位介绍',
+                        '各位同事，大家好！我是腾讯教育石梅。接下来分享'
+                    ],
+                    'conference': [
+                        '尊敬的各位来宾，大家好！我是腾讯教育石梅。非常荣幸受邀参加',
+                        '各位专家、各位同仁，大家好！我是腾讯教育石梅。很高兴在此与大家交流',
+                        '各位领导、各位嘉宾，大家好！我是腾讯教育石梅。非常高兴能参与本次'
+                    ],
+                    'training': [
+                        '各位老师、各位同学，大家好！我是腾讯教育石梅。非常高兴今天能和大家分享',
+                        '各位同仁，大家好！我是腾讯教育石梅。今天很荣幸在此进行培训',
+                        '各位朋友，大家好！我是腾讯教育石梅。非常期待与大家一起学习'
+                    ],
+                    'ceremony': [
+                        '尊敬的各位领导、各位来宾，大家好！我是腾讯教育石梅。今天非常荣幸参加',
+                        '各位嘉宾、各位同仁，大家好！我是腾讯教育石梅。在此见证',
+                        '尊敬的各位朋友，大家好！我是腾讯教育石梅。非常高兴在此庆祝'
+                    ]
+                };
 
-石梅演讲风格核心特征：
+                // 根据演讲类型选择不同的结尾方式
+                const endingVariations = {
+                    'keynote': [
+                        '让我们携手同行，共同书写教育创新发展的新篇章！',
+                        '期待与各位继续深化合作，共创美好未来！',
+                        '让我们并肩前行，共同推动教育数字化转型！'
+                    ],
+                    'presentation': [
+                        '以上就是我的汇报，请各位领导批评指正！',
+                        '感谢各位的聆听，欢迎大家提出宝贵意见！',
+                        '希望我的分享能给大家带来启发，谢谢！'
+                    ],
+                    'conference': [
+                        '期待与各位专家有更深入的交流与合作！',
+                        '希望各位在论坛中有所收获，不虚此行！',
+                        '期待与各位同仁共同推动行业发展！'
+                    ],
+                    'training': [
+                        '希望今天的分享对大家有所帮助！',
+                        '感谢各位的聆听，让我们共同进步！',
+                        '期待与各位有更多的学习交流机会！'
+                    ],
+                    'ceremony': [
+                        '预祝本次活动圆满成功，祝各位身体健康、工作顺利！',
+                        '感谢各位的参与，让我们共同见证这一重要时刻！',
+                        '祝各位来宾身体健康、万事如意！'
+                    ]
+                };
 
-开场风格：
-- 正式致敬各级领导和嘉宾
-- 自我介绍："我是腾讯教育石梅"
-- 表达荣幸和祝贺
-- 强调公司使命："用户为本 科技向善"
+                // 随机选择开场和结尾
+                const randomOpen = openingVariations[type][Math.floor(Math.random() * openingVariations[type].length)];
+                const randomEnd = endingVariations[type][Math.floor(Math.random() * endingVariations[type].length)];
 
-内容架构：
-- 教育理念："用数字科技 让教育更富创造力"
-- 价值主张："科技助教 连接兴学 专业为育"
-- 愿景定位：成为教育创新的共建者
-- 合作理念：携手同行 并肩前行 共同书写
+                // RAG检索增强
+                let ragContext = '';
+                let ragData = null;
+                if (useRAG && typeof ragEngine !== 'undefined') {
+                    try {
+                        output.innerHTML = '<div class="loading">🔍 正在检索相关数据和案例...</div>';
+                        ragData = await ragEngine.retrieve(topic, type, 5);
+                        ragContext = ragData.context;
+                        
+                        // 显示RAG预览
+                        displayRAGPreview(ragData);
+                    } catch (e) {
+                        console.error('RAG检索失败:', e);
+                    }
+                }
 
-语言特点：
-- 专业术语准确：AI原生 智能体 大模型 教育数字化转型
-- 数据驱动表达：具体的学校数 师生数 作品数等
-- 时间节点明确：按月份梳理成果和进展
-- 感谢层次丰富：多层次表达感谢
+                let prompt = `请严格模仿石梅（腾讯教育高管）的演讲风格，为我创作一篇个性化的${typeMap[type]}演讲稿。
 
-基本信息：
+【重要要求】
+1. 必须紧密围绕演讲主题"${topic}"展开，不能泛泛而谈
+2. 根据目标听众${audienceText}的特点，调整语言深度和表达方式
+3. 结合当前教育领域的热点和趋势，展现专业见解
+4. 语言风格：${styleMap[style]}
+
+【基本信息】
 - 演讲主题：${topic}
+- 演讲类型：${typeMap[type]}
 - 演讲时长：${duration}分钟
 - 目标听众：${audienceText}
-- 演讲风格：${styleMap[style]}
 
-内容要求：
-1. 开场简洁有力 问候致敬 主题引入
-2. 主体分2-3个维度展开 包含趋势分析 产品落地 创新应用
-3. 结尾愿景展望 使命表达 合作邀请 感谢致辞
-4. 语言${styleMap[style]} 体现腾讯教育技术实力和服务理念
-5. 控制在${duration}分钟时长 适合${audienceText}理解
-6. 重要：生成的演讲稿要简洁清晰 减少不必要的标点符号和修饰词 保持内容的流畅性和可读性`;
+【石梅演讲风格要点】
+1. 开场方式：${randomOpen}，然后自然引入主题
+2. 核心表达：
+   - 使命定位：用户为本，科技向善
+   - 教育理念：用数字科技，让教育更富创造力
+   - 价值主张：科技助教、连接兴学，专业为育
+3. 根据主题需要，灵活运用以下元素：
+   - 政策引用：适时引用教育部政策或领导讲话
+   - 数据支撑：用具体数据增强说服力
+   - 案例分享：结合实际合作案例
+   - 合作理念：携手同行、并肩前行
+4. 结尾方式：${randomEnd}`;
+
+                // 添加RAG检索到的上下文
+                if (ragContext) {
+                    prompt += `\n\n【参考数据和案例】\n${ragContext}\n\n请在演讲稿中自然地融入以上相关数据和案例，增强演讲稿的真实性和说服力。`;
+                }
 
                 if (keyPoints) {
                     prompt += `\n\n关键要点：\n${keyPoints}`;
                 }
 
-                prompt += `\n\n石梅演讲风格参考样本：
+                prompt += `\n\n石梅演讲风格参考样本（基于四篇完整演讲稿）：
 
 学术场合开场示例：
 "尊敬的各位领导和嘉宾，大家上午好！非常荣幸受邀参加本次学术研讨会。首先，我代表腾讯教育，对研讨会的顺利召开表示热烈祝贺！"
@@ -576,6 +1275,24 @@
 
 价值主张阐述：
 "我们始终坚持'科技助教、连接兴学、专业为育'的价值主张，依托腾讯云丰富的基础产品能力以及AI、连接方面的优势，服务于教育的数字化转型和高质量发展。"
+
+公司战略表达（2025新）：
+"腾讯作为长期深耕科技与教育领域的一员，积极响应国家政策，在人工智能教育方向聚焦发力，以'All in AI，AI in All'业务模式，围绕'AI Education'、'AI for Education'和'AI for Science'三个方面持续耕耘。"
+
+三大方向详解-AI Education：
+"在AI Education方面，腾讯始终倡导练学一体和产学一体的理念，将理论学习与实训结合。腾讯联合教育专家、一线教师，精心打造了涵盖小学低年级感知体验、高年级理解应用的全学段课程内容，以'AIGC创作工坊'为教学练习平台，通过AI生文、AI绘画、AI视频、AI建模、AI音乐等功能，和AI+科学创意案例项目，体验最新的科技能力，生动有趣的揭开人工智能的神秘面纱。"
+
+三大方向详解-AI for Education：
+"在AI for Education方面，腾讯前瞻性布局教育Agent AI方向，潜心打造腾讯教育超级智能体，将大模型、Agent技术与教育场景深度耦合，在提供智能体创建能力的同时，还提供设计专家点评、论文索引、论文精读等多智能体协作服务。"
+
+三大方向详解-AI for Science：
+"在AI for Science方面，腾讯定位科研协助者，提供各类AI辅助工具。为解决科研工作者计算环境搭建的额外工作，基于科研周期特性，提供开箱即用的、按需计量的高性能应用智算服务。还有集成AI编程助手、Python/Java/大模型框架等主流开发模板的在线编程IDE产品Cloud Studio等工具，都在协助科研工作者提升科研效率。"
+
+赛事理念表达：
+"腾讯接下来将围绕'以赛促学'、'以赛促用'、'以赛促创'的宗旨举办系列的校园AI赛事活动，持续迭代'LACC'一站式教育智能体平台，充分将自身在技术、资源、平台等方面的优势结合到学（Learning）、用（Application）、创（Creation）、赛（Competition）教育场景中来。"
+
+政策引用示例：
+"教育部怀进鹏部长强调：'加快教育大模型建设与人工智能+教育场景创新，加强对学生数字素养和人工智能应用能力的培养，将数字技能融入各学段教育教学全过程。'"
 
 愿景定位升华：
 "我们的愿景是成为教育创新的'共建者'，而不仅仅是技术工具的提供者。当前，我们正站在一场由人工智能驱动的教育变革浪潮之巅。"
@@ -601,6 +1318,9 @@
 时间节点梳理：
 "8月，我们发布了青少年AIGC创作工坊；9月，腾讯教育智能体平台正式上线；10月，我们与上海海事大学共同发布了海商法大模型。"
 
+2025数字生态大会开场：
+"尊敬的各位师长、同仁，大家好！非常荣幸能与诸位再次相聚在腾讯全球数字生态大会上。首先，请允许我代表腾讯向出席本次活动的所有嘉宾，表示最热烈的欢迎和最诚挚的感谢！"
+
 合作理念表达：
 "我们希望与各位教育同仁携手同行，在AI赋能教育的道路上并肩前行，共同探索教育创新的无限可能。"
 
@@ -608,9 +1328,7 @@
 "教育创新与科学技术发展息息相关，腾讯教育愿与各位同仁一起，以开放的心态、务实的行动，探索人工智能与教育融合的更多可能，共同书写教育创新发展的新篇章！"
 
 祝福结尾：
-"最后，预祝本次活动圆满成功，祝各位领导、各位同仁学有所获、万事如意！谢谢大家！"
-
-注意：请生成结构清晰、分段合理的演讲稿，使用正常的标点符号保证可读性，避免过度修饰但保持演讲稿的专业性和流畅性。`;
+"最后，预祝本次活动圆满成功，祝各位领导、各位同仁学有所获、万事如意！谢谢大家！"`;
                 
                 // 清理prompt中可能的问题字符
                 prompt = prompt.replace(/[\u0000-\u001F\u007F-\u009F]/g, '');
@@ -654,9 +1372,12 @@
                     
                     output.innerHTML = `<div class="success">✅ 演讲稿生成成功！</div>\n\n<div id="speechText">${speechContent}</div>`;
                     copyBtn.style.display = 'inline-block';
-                    
+
                     // 更新字数统计
                     updateWordCount(speechContent);
+
+                    // 保存到历史记录
+                    saveToHistory(topic, speechContent);
                 } else {
                     throw new Error('API返回数据格式异常');
                 }
